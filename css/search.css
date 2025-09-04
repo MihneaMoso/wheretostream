@@ -1,0 +1,39 @@
+details[role=list] summary:not([role]) {
+    padding: 0;
+    border: 0;
+}
+
+details[role=list] summary::after {
+    display: none;
+}
+
+details[role=list] summary+ul {
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+details[role=list] summary+ul li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+}
+
+details[role=list] summary+ul li img {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-box-shadow);
+}
+
+details[role=list] summary+ul li a {
+    width: 100%;
+    height: 60px;
+    padding: var(--spacing);
+    margin: 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
