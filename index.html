@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Wheretowatch</title>
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="favicon/favicon-16x16.png"
+        />
+        <link rel="stylesheet" href="css/pico.min.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/search.css" />
+        <link rel="manifest" href="/site.webmanifest" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wheretowatch</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-    <link rel="stylesheet" href="css/pico.min.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/search.css">
-    <link rel="manifest" href="/site.webmanifest">
-</head>
-
-<body>
-    <!-- Theme switcher (top-right) -->
-    <header class="topbar">
-        <div x-data="{
+    <body>
+        <!-- Theme switcher (top-right) -->
+        <header class="topbar">
+            <div
+                x-data="{
                 theme: localStorage.getItem('theme') || document.documentElement.getAttribute('data-theme') || 'light',
                 init() {
                     document.documentElement.setAttribute('data-theme', this.theme);
@@ -27,36 +41,75 @@
                     document.documentElement.setAttribute('data-theme', this.theme);
                     localStorage.setItem('theme', this.theme);
                 }
-            }" class="theme-toggle" aria-hidden="false">
-            <button @click="toggle()" :aria-label="'Switch to ' + (theme === 'light' ? 'dark' : 'light') + ' mode'" class="toggle-btn">
-                <span class="sr-only">Toggle theme</span>
-                <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="16" height="16">
-                    <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
-                    <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <path d="M12 2v2"></path>
-                        <path d="M12 20v2"></path>
-                        <path d="M4.93 4.93l1.41 1.41"></path>
-                        <path d="M17.66 17.66l1.41 1.41"></path>
-                        <path d="M2 12h2"></path>
-                        <path d="M20 12h2"></path>
-                        <path d="M4.93 19.07l1.41-1.41"></path>
-                        <path d="M17.66 6.34l1.41-1.41"></path>
-                    </g>
-                </svg>
-                <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="16" height="16">
-                    <path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                </svg>
-                <span class="toggle-knob" :class="theme === 'dark' ? 'dark' : 'light'"></span>
-            </button>
-        </div>
-    </header>
+            }"
+                class="theme-toggle"
+                aria-hidden="false"
+            >
+                <button
+                    @click="toggle()"
+                    :aria-label="'Switch to ' + (theme === 'light' ? 'dark' : 'light') + ' mode'"
+                    class="toggle-btn"
+                >
+                    <span class="sr-only">Toggle theme</span>
+                    <svg
+                        class="icon icon-sun"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                        width="16"
+                        height="16"
+                    >
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="4"
+                            fill="currentColor"
+                        ></circle>
+                        <g
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+                            <path d="M12 2v2"></path>
+                            <path d="M12 20v2"></path>
+                            <path d="M4.93 4.93l1.41 1.41"></path>
+                            <path d="M17.66 17.66l1.41 1.41"></path>
+                            <path d="M2 12h2"></path>
+                            <path d="M20 12h2"></path>
+                            <path d="M4.93 19.07l1.41-1.41"></path>
+                            <path d="M17.66 6.34l1.41-1.41"></path>
+                        </g>
+                    </svg>
+                    <svg
+                        class="icon icon-moon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                        width="16"
+                        height="16"
+                    >
+                        <path
+                            fill="currentColor"
+                            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
+                        ></path>
+                    </svg>
+                    <span
+                        class="toggle-knob"
+                        :class="theme === 'dark' ? 'dark' : 'light'"
+                    ></span>
+                </button>
+            </div>
+        </header>
 
-    <main class="hero" role="main" aria-labelledby="site-title">
-        <h1 id="site-title" class="title">WhereToStream</h1>
-        <p class="subtitle">Your all-in one place for checking where to watch</p>
+        <main class="hero" role="main" aria-labelledby="site-title">
+            <h1 id="site-title" class="title">WhereToStream</h1>
+            <p class="subtitle">
+                Your all-in one place for checking where to watch
+            </p>
 
-        <div x-data="{
-                words: ['Movies','Shows','Comedies','Documentaries','Indie','Animation','Classics'],
+            <div
+                x-data="{
+                words: ['Movies','Shows','Comedies','Documentaries','Indie','Animation','Classics', 'Action'],
                 idx: 0,
                 visible: true,
                 init() {
@@ -69,42 +122,69 @@
                         }, 350);
                     }, 3000);
                 }
-            }" x-init="init()" class="rotator-wrap" aria-live="polite">
-            <!-- <span class="rotator-label">Searching:</span> -->
-            <span class="rotating" :class="{ 'visible': visible }" x-text="words[idx]"></span>
-        </div>
+            }"
+                x-init="init()"
+                class="rotator-wrap"
+                aria-live="polite"
+            >
+                <!-- <span class="rotator-label">Searching:</span> -->
+                <span
+                    class="rotating"
+                    :class="{ 'visible': visible }"
+                    x-text="words[idx]"
+                ></span>
+            </div>
 
-        <div x-data="searchInput">
-            <details role="list" :open="isOpen">
-                <summary aria-haspopup="listbox">
-                    <input type="text" @input="getItems" placeholder="search ..." x-model="search">
-                </summary>
+            <div x-data="searchInput">
+                <details role="list" :open="isOpen">
+                    <summary aria-haspopup="listbox">
+                        <input
+                            type="text"
+                            @input="getItems"
+                            placeholder="search ..."
+                            x-model="search"
+                        />
+                    </summary>
 
-                <ul role="listbox" @click.outside="closeSearch" class="search-results">
-                    <template x-for="item in getItems" :key="item.id">
-                        <li class="result-item">
-                            <img :src="item.preview_image" alt="" class="result-thumb">
+                    <ul
+                        role="listbox"
+                        @click.outside="closeSearch"
+                        class="search-results"
+                    >
+                        <template x-for="item in getItems" :key="item.id">
+                            <li class="result-item">
+                                <img
+                                    :src="item.preview_image"
+                                    alt=""
+                                    class="result-thumb"
+                                />
 
-                            <div class="result-body">
-                                <a href="#" class="result-title" @click.prevent="search = item.title; cleanSearch()"
-                                    x-text="item.title"></a>
-                                <p class="result-desc" x-text="item.description"></p>
-                            </div>
+                                <div class="result-body">
+                                    <a
+                                        href="#"
+                                        class="result-title"
+                                        @click.prevent="search = item.title; cleanSearch()"
+                                        x-text="item.title"
+                                    ></a>
+                                    <p
+                                        class="result-desc"
+                                        x-text="item.description"
+                                    ></p>
+                                </div>
 
-                            <div class="availability" :class="item.available ? 'available' : 'unavailable'"
-                                x-text="item.available ? item.provider : 'Not available'"></div>
-                        </li>
-                    </template>
-                </ul>
-            </details>
-        </div>
+                                <div
+                                    class="availability"
+                                    :class="item.available ? 'available' : 'unavailable'"
+                                    x-text="item.available ? item.provider : 'Not available'"
+                                ></div>
+                            </li>
+                        </template>
+                    </ul>
+                </details>
+            </div>
+        </main>
 
-    </main>
-
-
-
-    <script type="module" src="js/main.js"></script>
-    <script src="js/search.js"></script>
-</body>
-
+        <script type="module" src="js/main.js"></script>
+        <script src="js/search.js"></script>
+    </body>
 </html>

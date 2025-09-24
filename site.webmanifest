@@ -9,10 +9,7 @@
     "orientation": "portrait",
     "theme_color": "#111827",
     "background_color": "#ffffff",
-    "categories": [
-        "utilities",
-        "video"
-    ],
+    "categories": ["utilities", "video"],
     "prefer_related_applications": false,
     "icons": [
         {
