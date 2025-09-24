@@ -13,7 +13,7 @@ export class MovieData extends OpenAPIRoute {
         },
         responses: {
             "200": {
-                description: "Returns a single task if found",
+                description: "Returns a single MovieData if found",
                 content: {
                     "application/json": {
                         schema: z.object({
@@ -28,7 +28,7 @@ export class MovieData extends OpenAPIRoute {
                 },
             },
             "404": {
-                description: "Task not found",
+                description: "Movie not found",
                 content: {
                     "application/json": {
                         schema: z.object({
@@ -63,20 +63,20 @@ export class MovieData extends OpenAPIRoute {
             // call custom functions for each provider that fill in the information for a movieModel object
             // and add a new movieModel to the movieData array
         });
-        const exists = true;
+        // const exists = true;
 
-        // @ts-ignore: check if the object exists
-        if (exists === false) {
-            return Response.json(
-                {
-                    success: false,
-                    error: "Object not found",
-                },
-                {
-                    status: 404,
-                }
-            );
-        }
+        // // @ts-ignore: check if the object exists
+        // if (exists === false) {
+        //     return Response.json(
+        //         {
+        //             success: false,
+        //             error: "Object not found",
+        //         },
+        //         {
+        //             status: 404,
+        //         }
+        //     );
+        // }
 
         return {
             success: true,
