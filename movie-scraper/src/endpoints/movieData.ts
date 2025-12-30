@@ -1,6 +1,8 @@
 import { Bool, OpenAPIRoute, Str } from "chanfana";
 import { z } from "zod";
 import { type AppContext, Movie, Provider } from "../types";
+import { Providers } from "../Providers";
+import getMovieData from "../corescraper";
 
 export class MovieData extends OpenAPIRoute {
     schema = {
@@ -44,50 +46,24 @@ export class MovieData extends OpenAPIRoute {
     };
 
     async handle(c: AppContext) {
-        // Get validated data
         const data = await this.getValidatedData<typeof this.schema>();
-
-        // Retrieve the validated slug
         const { movieName } = data.params;
-        const shortMovieName: string = movieName.split(" ")[0];
 
-        // Implement your own object fetch here
+        // run scrapers in parallel with Promise.all; map preserves order
+        const tasks = Providers.map((provider, idx) =>
+            getMovieData(provider.name, idx, movieName)
+                .catch(err => {
+                    console.error("scraper error", provider.name, err);
+                    return null; // keep slot but mark failed
+                })
+        );
 
-        // fetch() here to get updated provider list every time
-        const providers: typeof Provider[] = [];
-
-        // array to store all results from scraping, storing movieModels
-        let movieData: typeof Movie[] = [];
-
-        providers.forEach((provider, idx) => {
-            // call custom functions for each provider that fill in the information for a movieModel object
-            // and add a new movieModel to the movieData array
-        });
-        // const exists = true;
-
-        // // @ts-ignore: check if the object exists
-        // if (exists === false) {
-        //     return Response.json(
-        //         {
-        //             success: false,
-        //             error: "Object not found",
-        //         },
-        //         {
-        //             status: 404,
-        //         }
-        //     );
-        // }
+        const results = await Promise.all(tasks);
+        const movies = results.filter(Boolean) as z.infer<typeof Movie>[];
 
         return {
             success: true,
-            movie: {
-                title: movieName,
-                preview_image: '',
-                description: "this needs to be done",
-                available: false,
-                provider: '',
-                link: ''
-            },
+            movies,
         };
     }
 }

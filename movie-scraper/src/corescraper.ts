@@ -1,30 +1,45 @@
 import { Movie } from "./types";
 import { Providers } from "./Providers";
-import { Provider } from "./types";
+// import { Provider } from "./types";
 // import z from "zod";
+import * as scrapers from "./scrapers"; // uses src/scrapers/index.ts
 
 type MovieType = typeof Movie._type;
 
-export default async function getMovieData(provider: string): Promise<MovieType> {
+async function withTimeout<T>(p: Promise<T>, ms = 5000): Promise<T | null> {
+    return new Promise((resolve) => {
+        const t = setTimeout(() => resolve(null), ms);
+        p.then(r => { clearTimeout(t); resolve(r); }).catch(e => { clearTimeout(t); resolve(null); });
+    });
+}
 
-    const providerIndex = Providers.findIndex(p => p.name === provider);
+export default async function getMovieData(
+    provider: string,
+    providerIndex: number,
+    query: string
+): Promise<MovieType> {
     const link: string = Providers[providerIndex].link;
-    
-    // Example: fetch or construct the raw movie data object here
-    const rawMovieData = {
+    let responseData: Partial<MovieType> = {
         title: "Example Title",
         preview_image: "example.jpg",
         description: "An example movie.",
         available: true,
-        provider: provider,
-        link: link
+        provider,
+        link,
+    };
+
+    const fn = (scrapers as any)[`get${provider}`] ?? undefined;
+    if (typeof fn === "function") {
+        const result = await withTimeout(fn(query), 7000); // null on timeout/error
+        if (result) responseData = result;
     }
 
-    
-
-    // Validate and parse the data using the Movie schema
-    const moviedata: MovieType = Movie.parse(rawMovieData);
+    // validate/normalize with your zod schema
+    const moviedata: MovieType = Movie.parse({
+        ...responseData,
+        provider,
+        link,
+    });
 
     return moviedata;
-
 }
